@@ -1,4 +1,4 @@
-package com.ziroom.aquarius.aspect;
+package com.ziroom.aquarius.common.aspect;
 
 import com.alibaba.fastjson.JSONObject;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -12,6 +12,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * @author yuanpeng
@@ -26,13 +27,14 @@ public class WebRequestLogAspect {
     private static Logger logger = LoggerFactory.getLogger(WebRequestLogAspect.class);
 
 
-    @Pointcut("execution(public * com.ziroom.aquarius.controller..*.*(..))")
+    @Pointcut("execution(public * com.ziroom.aquarius.*.controller..*.*(..))")
     public void webRequestLog() {}
 
 
     @Around("webRequestLog()")
     public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
         try {
+            long start = System.currentTimeMillis();
             ServletRequestAttributes ra = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
             HttpServletRequest request = null;
             String ip="";
@@ -40,16 +42,29 @@ public class WebRequestLogAspect {
                 request = ra.getRequest();
                 ip = getIpAddr(request);
             }
-            String className = pjp.getTarget().getClass().getSimpleName();
-            String method = pjp.getSignature().getName();
-            Object[] args = pjp.getArgs();
-            String clzMethod = className + "." + method;
-            logger.info("method {} start, args: {},IP:{}", clzMethod, args,ip);
-            long start = System.currentTimeMillis();
+
+            StringBuilder logUrlSb = new StringBuilder(request.getRequestURI());
+            logUrlSb.append("?");
+            Map<String, String[]> params = request.getParameterMap();
+            for (String key : params.keySet()) {
+                String[] values = params.get(key);
+                for (String value : values) {
+                    logUrlSb.append(key);
+                    logUrlSb.append("=");
+                    logUrlSb.append(value);
+                    logUrlSb.append("&");
+                }
+            }
+            String logUrl = logUrlSb.toString();
+            if (logUrl.endsWith("&")) {
+                logUrl = logUrl.substring(0, logUrl.lastIndexOf('&'));
+            } else if (logUrl.endsWith("?")) {
+                logUrl = logUrl.substring(0, logUrl.lastIndexOf('?'));
+            }
             // result的值就是被拦截方法的返回值
             Object result = pjp.proceed();
             long end = System.currentTimeMillis();
-            logger.info("method {} end, cost: {}ms,reponse:{}", clzMethod, (end - start), JSONObject.toJSONString(result));
+            logger.info("url: {},reponse:{},cost: {}ms,ip:{}", logUrl,JSONObject.toJSONString(result), (end - start), ip);
             return result;
         } catch (Exception e) {
             e.printStackTrace();

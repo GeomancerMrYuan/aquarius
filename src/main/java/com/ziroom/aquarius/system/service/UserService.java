@@ -1,6 +1,7 @@
-package com.ziroom.aquarius.service;
+package com.ziroom.aquarius.system.service;
 
-import com.ziroom.aquarius.model.User;
+
+import com.ziroom.aquarius.system.model.User;
 
 /**
  * @author yuanpeng
@@ -36,4 +37,6 @@ public interface UserService {
      * @return
      */
     int updateByPrimaryKeySelective(User record);
+
+    User getUsername(String username);
 }

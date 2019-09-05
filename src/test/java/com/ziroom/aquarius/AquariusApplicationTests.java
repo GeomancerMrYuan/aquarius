@@ -20,4 +20,9 @@ public class AquariusApplicationTests {
         }
     }
 
+    public static void main(String[] args) {
+        String b="\\N";
+        System.out.println(b);
+    }
+
 }

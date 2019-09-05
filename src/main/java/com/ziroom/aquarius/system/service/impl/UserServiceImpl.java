@@ -1,8 +1,9 @@
-package com.ziroom.aquarius.service.impl;
+package com.ziroom.aquarius.system.service.impl;
 
-import com.ziroom.aquarius.dao.UserMapper;
-import com.ziroom.aquarius.model.User;
-import com.ziroom.aquarius.service.UserService;
+
+import com.ziroom.aquarius.system.dao.UserMapper;
+import com.ziroom.aquarius.system.model.User;
+import com.ziroom.aquarius.system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +35,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public int updateByPrimaryKeySelective(User record) {
         return 0;
+    }
+
+    @Override
+    public User getUsername(String username) {
+        return userMapper.getUsername(username);
     }
 }

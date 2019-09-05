@@ -1,4 +1,4 @@
-package com.atguigu.springboot.config;
+package com.ziroom.aquarius.common.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
