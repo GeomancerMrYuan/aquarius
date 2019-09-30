@@ -3,6 +3,7 @@ package com.ziroom.aquarius.system.interceptor;
 import com.ziroom.aquarius.system.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import java.io.PrintWriter;
  * @since 1.0
  */
 @Configuration
+@Order(1)
 public class ApiInterceptor implements HandlerInterceptor{
     @Autowired
     private RequestService requestService;
@@ -28,7 +30,6 @@ public class ApiInterceptor implements HandlerInterceptor{
         try (PrintWriter writer = response.getWriter()) {
             writer.append(reponse);
         }
-
         return false;
     }
 }
