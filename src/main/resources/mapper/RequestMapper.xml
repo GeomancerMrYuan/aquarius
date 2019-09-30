@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ziroom.aquarius.system.dao.RequestMapper">
+    <resultMap id="BaseResultMap" type="com.ziroom.aquarius.system.model.Request">
+        <id column="request_id" jdbcType="BIGINT" property="requestId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="status" jdbcType="CHAR" property="status"/>
+        <result column="req_url" jdbcType="VARCHAR" property="reqUrl"/>
+        <result column="reponse" jdbcType="VARCHAR" property="reponse"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    request_id, create_time, modify_time, status, req_url, reponse
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_request
+        where request_id = #{requestId,jdbcType=BIGINT}
+    </select>
+
+    <select id="getReponseByUrl" resultType="java.lang.String">
+        select
+        reponse
+        from t_request
+        where req_url = #{url}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_request
+    where request_id = #{requestId,jdbcType=BIGINT}
+  </delete>
+
+    <insert id="insertSelective" parameterType="com.ziroom.aquarius.system.model.Request">
+        insert into t_request
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="requestId != null">
+                request_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="reqUrl != null">
+                req_url,
+            </if>
+            <if test="reponse != null">
+                reponse,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="requestId != null">
+                #{requestId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=CHAR},
+            </if>
+            <if test="reqUrl != null">
+                #{reqUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="reponse != null">
+                #{reponse,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ziroom.aquarius.system.model.Request">
+        update t_request
+        <set>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=CHAR},
+            </if>
+            <if test="reqUrl != null">
+                req_url = #{reqUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="reponse != null">
+                reponse = #{reponse,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where request_id = #{requestId,jdbcType=BIGINT}
+    </update>
+
+</mapper>
