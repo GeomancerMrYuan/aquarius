@@ -27,12 +27,12 @@
 
     <!--错误日志发报警邮件,使用163的邮箱-->
     <property name="smtpHost" value="smtp.163.com"/>
-    <property name="smtpPort" value="25" />
+    <property name="smtpPort" value="25"/>
     <property name="email_from" value="17633182036@163.com"/>
     <property name="username" value="17633182036@163.com"/>
     <property name="password" value="自己的密码"/>
     <property name="email_to" value="651159667@qq.com,17633182036@163.com"/>
-    <property name="SSL" value="false" />
+    <property name="SSL" value="false"/>
     <property name="email_subject" value="aquarius项目异常"/>
     <appender name="errMailer" class="ch.qos.logback.classic.net.SMTPAppender">
         <smtpHost>${smtpHost}</smtpHost>
@@ -51,16 +51,10 @@
     </appender>
 
     <root level="info">
-        <appender-ref ref="FILE"/>
+        <springProfile name="test">
+            <appender-ref ref="FILE"/>
+            <appender-ref ref="errMailer"/>
+        </springProfile>
         <appender-ref ref="STDOUT"/>
-        <appender-ref ref="errMailer"/>
     </root>
-
-
-    <!--myibatis log configure-->
-    <logger name="com.apache.ibatis" level="INFO"/>
-    <logger name="java.sql.Connection" level="INFO"/>
-    <logger name="java.sql.Statement" level="INFO"/>
-    <logger name="java.sql.PreparedStatement" level="INFO"/>
-
 </configuration>

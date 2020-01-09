@@ -1,11 +1,12 @@
 #数据库及连接池的配置
 spring:
+  profiles:
+    active: dev
   datasource:
     #数据源基本配置
-    username: dev_finance
-    password: ziroomdb
+    username: root
+    password: 123456
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://10.16.16.124:3306/aquarius?characterEncoding=utf8&useSSL=false
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       initial-size: 5
@@ -25,13 +26,17 @@ spring:
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
   messages:
     encoding: UTF-8
+    basename: i18n.login
+  thymeleaf:
+    cache: false
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper‐locations: classpath:mapper/*.xml #指定sql映射文件的位置
-
 server:
-  port: 8084
+  port: 8080
+
+
 
 

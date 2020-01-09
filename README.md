@@ -19,6 +19,7 @@
 
 ## 3.mock数据
 
+```sql
 CREATE TABLE `t_user` (
   `user_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '用户名',
@@ -46,6 +47,7 @@ CREATE TABLE `t_request` (
   `reponse` varchar(20000) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '请求返回参数',
   PRIMARY KEY (`request_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+```
 
 请求url域名替换为localhost:8080/api/
 req_url:填写域名后的uri
@@ -56,5 +58,50 @@ reponse:填写返回json字串
 req_url:/annualPayment/findOwnerContractInfo
 reponse:{"error_code":0,"error_message":"成功","status":"success","data":{"bankCardBrname":"中国农业银行股份有限公司"}}
 
+## 4.部署
+nohup java -jar aquarius-0.0.1-SNAPSHOT.jar --server.port=8086  > log.file  2>&1 &
 
+
+
+## 5.对接swagger2
+
+### 1.添加 Swagger 依赖
+
+```xml
+
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger2</artifactId>
+    <version>2.9.2</version>
+</dependency>
+```
+
+### 2.Swagger Java 配置
+
+```java
+@Configuration
+@EnableSwagger2
+public class SwaggerConfig {
+    @Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .build();
+    }
+}
+//验证: http://localhost:8080/v2/api-docs
+```
+
+### 3.添加 Swagger UI 依赖
+
+```xml
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger-ui</artifactId>
+    <version>2.9.2</version>
+</dependency>
+<!--验证:http://localhost:8080/swagger-ui.html-->
+```
 

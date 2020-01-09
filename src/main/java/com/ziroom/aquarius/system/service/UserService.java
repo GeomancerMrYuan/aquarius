@@ -38,5 +38,10 @@ public interface UserService {
      */
     int updateByPrimaryKeySelective(User record);
 
+    /**
+     * 根据userName查询User对象
+     * @param username
+     * @return
+     */
     User getUsername(String username);
 }

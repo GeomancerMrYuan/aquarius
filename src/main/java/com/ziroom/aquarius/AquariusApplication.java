@@ -9,5 +9,4 @@ public class AquariusApplication {
     public static void main(String[] args) {
         SpringApplication.run(AquariusApplication.class, args);
     }
-
 }

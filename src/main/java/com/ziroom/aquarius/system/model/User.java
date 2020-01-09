@@ -1,5 +1,6 @@
 package com.ziroom.aquarius.system.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -20,10 +21,11 @@ public class User {
 
     private String status;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date createTime;
-
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date modifyTime;
-
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date lastLoginTime;
 
     private String sex;

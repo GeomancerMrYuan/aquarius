@@ -1,13 +1,11 @@
 package com.ziroom.aquarius.common.aspect;
 
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -21,15 +19,12 @@ import java.util.Map;
  * @since 1.0
  */
 @Aspect
-@Component
+//@Component
+@Slf4j
 public class WebRequestLogAspect {
-
-    private static Logger logger = LoggerFactory.getLogger(WebRequestLogAspect.class);
-
 
     @Pointcut("execution(public * com.ziroom.aquarius.*.controller..*.*(..))")
     public void webRequestLog() {}
-
 
     @Around("webRequestLog()")
     public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
@@ -64,11 +59,11 @@ public class WebRequestLogAspect {
             // result的值就是被拦截方法的返回值
             Object result = pjp.proceed();
             long end = System.currentTimeMillis();
-            logger.info("url: {},reponse:{},cost: {}ms,ip:{}", logUrl,JSONObject.toJSONString(result), (end - start), ip);
+            log.info("url: {},reponse:{},cost: {}ms,ip:{}", logUrl,JSONObject.toJSONString(result), (end - start), ip);
             return result;
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("日志打印异常", e);
+            log.error("日志打印异常", e);
             return pjp.proceed();
         }
     }
