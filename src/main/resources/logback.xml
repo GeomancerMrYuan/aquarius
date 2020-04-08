@@ -51,10 +51,7 @@
     </appender>
 
     <root level="info">
-        <springProfile name="test">
-            <appender-ref ref="FILE"/>
-            <appender-ref ref="errMailer"/>
-        </springProfile>
+        <appender-ref ref="FILE"/>
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>

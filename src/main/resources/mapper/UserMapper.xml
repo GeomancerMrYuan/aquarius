@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ziroom.aquarius.system.dao.UserMapper">
-    <resultMap id="BaseResultMap" type="com.ziroom.aquarius.system.model.User">
+    <resultMap id="BaseResultMap" type="com.ziroom.aquarius.system.entity.User">
         <id column="user_id" jdbcType="BIGINT" property="userId"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
@@ -28,7 +28,7 @@
         from t_user
         where user_id = #{userId,jdbcType=BIGINT}
     </select>
-    <select id="getUsername" resultType="com.ziroom.aquarius.system.model.User">
+    <select id="getUsername" resultType="com.ziroom.aquarius.system.entity.User">
         select
         <include refid="Base_Column_List"/>
         from t_user
@@ -40,7 +40,7 @@
         where user_id = #{userId,jdbcType=BIGINT}
     </delete>
 
-    <insert id="insertSelective" parameterType="com.ziroom.aquarius.system.model.User">
+    <insert id="insertSelective" parameterType="com.ziroom.aquarius.system.entity.User">
         insert into t_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="userId != null">
@@ -133,7 +133,7 @@
     </insert>
 
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.ziroom.aquarius.system.model.User">
+    <update id="updateByPrimaryKeySelective" parameterType="com.ziroom.aquarius.system.entity.User">
         update t_user
         <set>
             <if test="username != null">

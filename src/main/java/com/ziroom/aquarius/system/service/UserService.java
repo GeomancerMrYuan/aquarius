@@ -1,7 +1,7 @@
 package com.ziroom.aquarius.system.service;
 
 
-import com.ziroom.aquarius.system.model.User;
+import com.ziroom.aquarius.system.entity.User;
 
 /**
  * @author yuanpeng

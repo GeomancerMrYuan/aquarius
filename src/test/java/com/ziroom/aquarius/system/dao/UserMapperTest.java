@@ -1,6 +1,6 @@
 package com.ziroom.aquarius.system.dao;
 
-import com.ziroom.aquarius.system.model.User;
+import com.ziroom.aquarius.system.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;

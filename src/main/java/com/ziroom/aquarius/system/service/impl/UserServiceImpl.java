@@ -2,7 +2,7 @@ package com.ziroom.aquarius.system.service.impl;
 
 
 import com.ziroom.aquarius.system.dao.UserMapper;
-import com.ziroom.aquarius.system.model.User;
+import com.ziroom.aquarius.system.entity.User;
 import com.ziroom.aquarius.system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

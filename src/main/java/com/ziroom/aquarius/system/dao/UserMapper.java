@@ -1,7 +1,7 @@
 package com.ziroom.aquarius.system.dao;
 
 import org.apache.ibatis.annotations.Mapper;
-import com.ziroom.aquarius.system.model.User;
+import com.ziroom.aquarius.system.entity.User;
 
 @Mapper
 public interface UserMapper {

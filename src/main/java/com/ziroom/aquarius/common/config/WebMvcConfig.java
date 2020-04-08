@@ -1,8 +1,8 @@
 package com.ziroom.aquarius.common.config;
 
+import com.ziroom.aquarius.common.interceptor.ApiInterceptor;
+import com.ziroom.aquarius.common.interceptor.LoginInterceptor;
 import com.ziroom.aquarius.common.resolver.CustomerLocaleResolver;
-import com.ziroom.aquarius.system.interceptor.ApiInterceptor;
-import com.ziroom.aquarius.system.interceptor.LoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,7 +35,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("common/login.html");
-        registry.addViewController("/index").setViewName("common/login.html");
+        registry.addViewController("/index").setViewName("index.html");
     }
 
     @Bean

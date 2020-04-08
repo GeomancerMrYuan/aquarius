@@ -1,8 +1,9 @@
-package com.ziroom.aquarius.system.vo;
+package com.ziroom.aquarius.common.vo;
 
 import lombok.Data;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.Serializable;
 
 /**
  * @author yuanpeng
@@ -11,9 +12,9 @@ import org.slf4j.LoggerFactory;
  * @since 1.0
  */
 @Data
-public class BaseResult {
+@Slf4j
+public class BaseResult<T> implements Serializable {
 
-    public static Logger logger = LoggerFactory.getLogger(BaseResult.class);
     /**
      * 状态码,0-成功,1-失败
      */
@@ -25,7 +26,7 @@ public class BaseResult {
     /**
      * 数据
      */
-    private Object data;
+    private T data;
 
     /**
      * 成功
@@ -35,7 +36,7 @@ public class BaseResult {
         BaseResult result = new BaseResult();
         result.setCode(0);
         result.setMessage("请求成功");
-        logger.info(result.toString());
+        log.info(result.toString());
         return result;
     }
 
@@ -44,12 +45,12 @@ public class BaseResult {
      * @param data
      * @return
      */
-    public static BaseResult success(Object data) {
+    public static<T> BaseResult success(T data) {
         BaseResult result = new BaseResult();
         result.setCode(0);
         result.setMessage("请求成功");
         result.setData(data);
-        logger.info(result.toString());
+        log.info(result.toString());
         return result;
     }
 
@@ -61,7 +62,7 @@ public class BaseResult {
         BaseResult result = new BaseResult();
         result.setCode(1);
         result.setMessage("请求失败");
-        logger.info(result.toString());
+        log.info(result.toString());
         return result;
     }
 
@@ -70,12 +71,12 @@ public class BaseResult {
      * @param data
      * @return
      */
-    public static BaseResult fail(Object data) {
+    public static<T> BaseResult fail(T data) {
         BaseResult result = new BaseResult();
         result.setCode(1);
         result.setMessage("请求失败");
         result.setData(data);
-        logger.info(result.toString());
+        log.info(result.toString());
         return result;
     }
 
@@ -88,7 +89,7 @@ public class BaseResult {
         BaseResult result = new BaseResult();
         result.setCode(1);
         result.setMessage(msg);
-        logger.info(result.toString());
+        log.info(result.toString());
         return result;
     }
 
@@ -97,11 +98,11 @@ public class BaseResult {
      * @param data
      * @return
      */
-    public static BaseResult fail(Integer code,String msg) {
+    public static BaseResult fail(Integer code, String msg) {
         BaseResult result = new BaseResult();
         result.setCode(code);
         result.setMessage(msg);
-        logger.info(result.toString());
+        log.info(result.toString());
         return result;
     }
 
@@ -112,12 +113,12 @@ public class BaseResult {
      * @param data
      * @return
      */
-    public static BaseResult build(Integer code,String msg,Object data) {
+    public static<T> BaseResult build(Integer code, String msg, T data) {
         BaseResult result = new BaseResult();
         result.setCode(code);
         result.setMessage(msg);
         result.setData(data);
-        logger.info(result.toString());
+        log.info(result.toString());
         return result;
     }
 

@@ -1,4 +1,4 @@
-package com.ziroom.aquarius.system.interceptor;
+package com.ziroom.aquarius.common.interceptor;
 
 import com.ziroom.aquarius.system.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,9 @@
 package com.ziroom.aquarius.system.controller;
 
 
-import com.ziroom.aquarius.system.model.User;
+import com.ziroom.aquarius.common.vo.BaseResult;
+import com.ziroom.aquarius.system.entity.User;
 import com.ziroom.aquarius.system.service.UserService;
-import com.ziroom.aquarius.system.vo.BaseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -29,13 +29,17 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/index")
+    public String getIndex(Long userId) {
+        return "测试成功";
+    }
+
     /**
      * 根据用户id查询用户信息
      * @param userId
      * @return
      */
     @GetMapping("/getUserById")
-    @ApiOperation(value="根据用户id查询用户信息", notes="根据用户id查询用户信息")
     public String getUserById(Long userId) {
         User user = userService.selectByPrimaryKey(userId);
         return user.toString();

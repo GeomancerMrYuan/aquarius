@@ -1,6 +1,6 @@
 package com.ziroom.aquarius.system.dao;
 
-import com.ziroom.aquarius.system.model.Request;
+import com.ziroom.aquarius.system.entity.Request;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

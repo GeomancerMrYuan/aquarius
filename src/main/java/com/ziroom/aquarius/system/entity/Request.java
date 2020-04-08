@@ -1,4 +1,4 @@
-package com.ziroom.aquarius.system.model;
+package com.ziroom.aquarius.system.entity;
 
 import lombok.Data;
 

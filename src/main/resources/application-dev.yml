@@ -2,4 +2,4 @@ spring:
   datasource:
     url: jdbc:mysql:///aquarius?characterEncoding=utf8&useSSL=false
 
-#debug: true
+  #debug: true

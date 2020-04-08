@@ -1,6 +1,6 @@
-package com.ziroom.aquarius.system.interceptor;
+package com.ziroom.aquarius.common.interceptor;
 
-import com.ziroom.aquarius.system.model.User;
+import com.ziroom.aquarius.system.entity.User;
 import com.ziroom.aquarius.system.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

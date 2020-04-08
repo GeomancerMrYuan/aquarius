@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ziroom.aquarius.system.dao.RequestMapper">
-    <resultMap id="BaseResultMap" type="com.ziroom.aquarius.system.model.Request">
+    <resultMap id="BaseResultMap" type="com.ziroom.aquarius.system.entity.Request">
         <id column="request_id" jdbcType="BIGINT" property="requestId"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
@@ -31,7 +31,7 @@
     where request_id = #{requestId,jdbcType=BIGINT}
   </delete>
 
-    <insert id="insertSelective" parameterType="com.ziroom.aquarius.system.model.Request">
+    <insert id="insertSelective" parameterType="com.ziroom.aquarius.system.entity.Request">
         insert into t_request
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="requestId != null">
@@ -74,7 +74,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.ziroom.aquarius.system.model.Request">
+    <update id="updateByPrimaryKeySelective" parameterType="com.ziroom.aquarius.system.entity.Request">
         update t_request
         <set>
             <if test="createTime != null">
