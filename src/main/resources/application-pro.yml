@@ -3,4 +3,4 @@ spring:
     url: jdbc:mysql://:3306/aquarius?characterEncoding=utf8&useSSL=false
 
 swagger:
-  enable: true
+  enable: false

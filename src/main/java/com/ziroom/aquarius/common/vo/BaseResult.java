@@ -1,6 +1,7 @@
-package com.ziroom.aquarius.system.vo;
+package com.ziroom.aquarius.common.vo;
 
 import lombok.Data;
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -119,6 +120,24 @@ public class BaseResult {
         result.setData(data);
         logger.info(result.toString());
         return result;
+    }
+
+    @Getter
+    public enum CodeEnums{
+        /**
+         * 状态码枚举
+         */
+        SUCCESS(1000,"请求成功"),
+        VALID(1001,"参数校验失败"),
+        FAILED(9999,"自定义失败")
+        ;
+        private Integer code;
+        private String msg;
+
+        CodeEnums(Integer code, String msg) {
+            this.code = code;
+            this.msg = msg;
+        }
     }
 
 }
