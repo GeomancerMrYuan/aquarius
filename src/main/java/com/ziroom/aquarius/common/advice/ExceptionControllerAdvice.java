@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * 全局异常拦截器
+ * 全局异常切面
  * @author yuanpeng
  * @version 1.0
  * @Date Created in 2020年04月13日 18:32

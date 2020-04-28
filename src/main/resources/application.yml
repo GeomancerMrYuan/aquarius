@@ -29,6 +29,8 @@ spring:
     basename: i18n.login
   thymeleaf:
     cache: false
+  resources:
+    staticLocations: classpath:/resources/template
 
 mybatis-plus:
   configuration:
