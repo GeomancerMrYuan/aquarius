@@ -34,7 +34,7 @@ public class BaseResult {
      */
     public static BaseResult success() {
         BaseResult result = new BaseResult();
-        result.setCode(0);
+        result.setCode(CodeEnums.SUCCESS.code);
         result.setMessage("请求成功");
         logger.info(result.toString());
         return result;
@@ -47,7 +47,7 @@ public class BaseResult {
      */
     public static BaseResult success(Object data) {
         BaseResult result = new BaseResult();
-        result.setCode(0);
+        result.setCode(CodeEnums.SUCCESS.code);
         result.setMessage("请求成功");
         result.setData(data);
         logger.info(result.toString());
@@ -60,8 +60,8 @@ public class BaseResult {
      */
     public static BaseResult fail() {
         BaseResult result = new BaseResult();
-        result.setCode(1);
-        result.setMessage("请求失败");
+        result.setCode(CodeEnums.FAILED.code);
+        result.setMessage("系统异常");
         logger.info(result.toString());
         return result;
     }
@@ -73,8 +73,8 @@ public class BaseResult {
      */
     public static BaseResult fail(Object data) {
         BaseResult result = new BaseResult();
-        result.setCode(1);
-        result.setMessage("请求失败");
+        result.setCode(CodeEnums.FAILED.code);
+        result.setMessage("系统异常");
         result.setData(data);
         logger.info(result.toString());
         return result;
@@ -87,7 +87,7 @@ public class BaseResult {
      */
     public static BaseResult fail(String msg) {
         BaseResult result = new BaseResult();
-        result.setCode(1);
+        result.setCode(CodeEnums.FAILED.code);
         result.setMessage(msg);
         logger.info(result.toString());
         return result;

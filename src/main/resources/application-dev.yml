@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql:///aquarius?characterEncoding=utf8&useSSL=false
-
+    druid:
+      url: jdbc:mysql:///aquarius?characterEncoding=utf8&useSSL=false
 swagger:
   enable: true
