@@ -18,7 +18,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @Configuration  //类似@Component,将这个类交给spring容器管理,单例
 @EnableSwagger2  //开启swagger注解
-//@ConditionalOnProperty(value = "swagger.enable", havingValue = "true") //springboot特有注解,条件判断,用于环境控制,当swagger.enable=起作用
+//@ConditionalOnProperty(value = "swagger.enable", havingValue = "true")
+// springboot特有注解,条件判断,用于环境控制,当swagger.enable=起作用
 public class SwaggerConfig{
 
     @Value("${swagger.enable:true}")

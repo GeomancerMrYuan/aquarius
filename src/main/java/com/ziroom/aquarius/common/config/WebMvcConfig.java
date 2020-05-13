@@ -1,6 +1,8 @@
 package com.ziroom.aquarius.common.config;
 
+import com.ziroom.aquarius.common.intercptor.LoggerIntercptor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -21,4 +23,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
 //    public void addResourceHandlers(ResourceHandlerRegistry registry) {
 //        registry.addResourceHandler("/").addResourceLocations("/doc.html");
 //    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        // 添加一个拦截器，连接以/admin为前缀的 url路径
+        registry.addInterceptor(new LoggerIntercptor()).addPathPatterns("/**");
+    }
 }

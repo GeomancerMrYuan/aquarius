@@ -4,10 +4,10 @@ spring:
     active: dev
   datasource:
     #数据源基本配置
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
-      username: root
-      password: 123456
-      driver-class-name: com.mysql.cj.jdbc.Driver
       filters: stat
       initialSize: 10
       maxActive: 20

@@ -1,6 +1,4 @@
-package com.ziroom.aquarius.demo;
-
-import java.util.List;
+package com.ziroom.aquarius.jvmdemo;
 
 /**
  * @author yuanpeng

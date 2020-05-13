@@ -1,10 +1,4 @@
-package com.ziroom.aquarius.demo;
-
-import lombok.extern.slf4j.Slf4j;
-import net.bytebuddy.description.field.FieldDescription;
-
-import java.io.*;
-import java.util.*;
+package com.ziroom.aquarius.jvmdemo;
 
 /**
  * @Description

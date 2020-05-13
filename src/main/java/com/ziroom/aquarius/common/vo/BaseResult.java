@@ -1,5 +1,6 @@
 package com.ziroom.aquarius.common.vo;
 
+import com.alibaba.fastjson.JSON;
 import lombok.Data;
 import lombok.Getter;
 import org.slf4j.Logger;
@@ -36,7 +37,7 @@ public class BaseResult {
         BaseResult result = new BaseResult();
         result.setCode(CodeEnums.SUCCESS.code);
         result.setMessage("请求成功");
-        logger.info(result.toString());
+        logger.info(JSON.toJSONString(result));
         return result;
     }
 
@@ -50,7 +51,7 @@ public class BaseResult {
         result.setCode(CodeEnums.SUCCESS.code);
         result.setMessage("请求成功");
         result.setData(data);
-        logger.info(result.toString());
+        logger.info(JSON.toJSONString(result));
         return result;
     }
 
@@ -62,7 +63,7 @@ public class BaseResult {
         BaseResult result = new BaseResult();
         result.setCode(CodeEnums.FAILED.code);
         result.setMessage("系统异常");
-        logger.info(result.toString());
+        logger.info(JSON.toJSONString(result));
         return result;
     }
 
@@ -76,7 +77,7 @@ public class BaseResult {
         result.setCode(CodeEnums.FAILED.code);
         result.setMessage("系统异常");
         result.setData(data);
-        logger.info(result.toString());
+        logger.info(JSON.toJSONString(result));
         return result;
     }
 
@@ -89,7 +90,7 @@ public class BaseResult {
         BaseResult result = new BaseResult();
         result.setCode(CodeEnums.FAILED.code);
         result.setMessage(msg);
-        logger.info(result.toString());
+        logger.info(JSON.toJSONString(result));
         return result;
     }
 
@@ -102,7 +103,7 @@ public class BaseResult {
         BaseResult result = new BaseResult();
         result.setCode(code);
         result.setMessage(msg);
-        logger.info(result.toString());
+        logger.info(JSON.toJSONString(result));
         return result;
     }
 
@@ -118,7 +119,7 @@ public class BaseResult {
         result.setCode(code);
         result.setMessage(msg);
         result.setData(data);
-        logger.info(result.toString());
+        logger.info(JSON.toJSONString(result));
         return result;
     }
 

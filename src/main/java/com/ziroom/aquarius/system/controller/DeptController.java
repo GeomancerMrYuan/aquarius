@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 /**
  * <p>
@@ -58,7 +59,7 @@ public class DeptController {
     }
 
     @PostMapping("/getPage")
-    public BaseResult getDeptPage(@Valid Long current,@Valid Long size,Dept dept){
+    public BaseResult getDeptPage(@NotNull Long current, @NotNull Long size, Dept dept){
         Page<Dept> page = new Page<>(current,size);
         QueryWrapper<Dept> wrapper = new QueryWrapper<>(dept);
         Page<Dept> result = deptService.page(page, wrapper);
