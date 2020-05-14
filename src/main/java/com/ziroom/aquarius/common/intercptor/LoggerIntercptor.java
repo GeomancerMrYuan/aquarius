@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.ziroom.aquarius.common.util.IpUtil;
 import com.ziroom.aquarius.common.util.UUIDUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import sun.net.util.IPAddressUtil;
@@ -15,7 +17,7 @@ import java.util.UUID;
 
 /**
  * @Classname LoggerIntercptor
- * @Description 日志拦截器,拦截url,打印ip及入参
+ * @Description 日志拦截器,拦截url,打印ip及入参;不推荐使用,细粒度太大了,想要只拦截controller包下的内容
  * @Date 2020-05-12 18:28
  * @Created by yuanpeng
  */
@@ -30,31 +32,31 @@ public class LoggerIntercptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        //统计计时
-        long beginTimeMS = System.currentTimeMillis();
-        request.setAttribute("beginTimeMS", beginTimeMS);
-        //设置线程uid
-        Thread.currentThread().setName(  "request_uuid:" + UUIDUtil.UUID32() +"_"+Thread.currentThread().getId());
-        //打印请求日志
-        StringBuilder logUrlSb = new StringBuilder("remoteIp:"+ IpUtil.getIpAddress(request) +","+request.getRequestURI());
-        logUrlSb.append("?");
-        Map<String, String[]> params = request.getParameterMap();
-        for (String key : params.keySet()) {
-            String[] values = params.get(key);
-            for (String value : values) {
-                logUrlSb.append(key);
-                logUrlSb.append("=");
-                logUrlSb.append(value);
-                logUrlSb.append("&");
-            }
-        }
-        String logUrl = logUrlSb.toString();
-        if (logUrl.endsWith("&")) {
-            logUrl = logUrl.substring(0, logUrl.lastIndexOf('&'));
-        } else if (logUrl.endsWith("?")) {
-            logUrl = logUrl.substring(0, logUrl.lastIndexOf('?'));
-        }
-        log.info(logUrl);
+//        //统计计时
+//        long beginTimeMS = System.currentTimeMillis();
+//        request.setAttribute("beginTimeMS", beginTimeMS);
+//        //设置线程uid
+//        Thread.currentThread().setName(  "request_uuid:" + UUIDUtil.UUID32() +"_"+Thread.currentThread().getId());
+//        //打印请求日志
+//        StringBuilder logUrlSb = new StringBuilder("remoteIp:"+ IpUtil.getIpAddress(request) +","+request.getRequestURI());
+//        logUrlSb.append("?");
+//        Map<String, String[]> params = request.getParameterMap();
+//        for (String key : params.keySet()) {
+//            String[] values = params.get(key);
+//            for (String value : values) {
+//                logUrlSb.append(key);
+//                logUrlSb.append("=");
+//                logUrlSb.append(value);
+//                logUrlSb.append("&");
+//            }
+//        }
+//        String logUrl = logUrlSb.toString();
+//        if (logUrl.endsWith("&")) {
+//            logUrl = logUrl.substring(0, logUrl.lastIndexOf('&'));
+//        } else if (logUrl.endsWith("?")) {
+//            logUrl = logUrl.substring(0, logUrl.lastIndexOf('?'));
+//        }
+//        log.info(logUrl);
         return true;
     }
 
@@ -66,7 +68,7 @@ public class LoggerIntercptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         long timeMS = System.currentTimeMillis() - (long) request.getAttribute("beginTimeMS");
-        log.info("接口耗时(ms):"+timeMS);
+        log.info(handler+"接口耗时(ms):"+timeMS);
     }
 
 }

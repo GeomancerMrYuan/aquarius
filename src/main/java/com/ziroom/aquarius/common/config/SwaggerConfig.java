@@ -7,11 +7,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.schema.ModelRef;
+import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * swagger配置类,相当于一个xml文件
@@ -31,10 +37,16 @@ public class SwaggerConfig{
      * Swagger开关
      * API分组
      * 扫描接口
+     * 设置header(token,cookie,)
      * @return
      */
     @Bean //往容器中注入一个docket实例
     public Docket api() {
+        ParameterBuilder tokenPar = new ParameterBuilder();
+        List<Parameter> pars = new ArrayList<>();
+        tokenPar.name("X-Auth-Token").description("token").modelRef(new ModelRef("string")).parameterType("header").required(false).build();
+        pars.add(tokenPar.build());
+
         return new Docket(DocumentationType.SWAGGER_2)
                 //配置头部信息
                 .apiInfo(new ApiInfoBuilder()
@@ -44,6 +56,8 @@ public class SwaggerConfig{
                         .build())
                 //API分组
                 .groupName("业主分期")
+                //配置request_header
+                .globalOperationParameters(pars)
                 //Swagger开关
                 .enable(flag)
                 /**
@@ -58,7 +72,7 @@ public class SwaggerConfig{
                  *  any() // 任何请求都扫描
                  *  none() // 任何请求都不扫描
                  *  regex(final String pathRegex) // 通过正则表达式控制
-                 *  ant(final String antPattern) // 通过ant()控制
+                 *  ant(final String antPattern) // 通过ant()控制  /**
                  */
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.ziroom.aquarius.system.controller"))

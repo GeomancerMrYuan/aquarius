@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 @Data
 public class BaseResult {
 
-    public static Logger logger = LoggerFactory.getLogger(BaseResult.class);
     /**
      * 状态码,0-成功,1-失败
      */
@@ -37,7 +36,6 @@ public class BaseResult {
         BaseResult result = new BaseResult();
         result.setCode(CodeEnums.SUCCESS.code);
         result.setMessage("请求成功");
-        logger.info(JSON.toJSONString(result));
         return result;
     }
 
@@ -51,7 +49,6 @@ public class BaseResult {
         result.setCode(CodeEnums.SUCCESS.code);
         result.setMessage("请求成功");
         result.setData(data);
-        logger.info(JSON.toJSONString(result));
         return result;
     }
 
@@ -63,7 +60,6 @@ public class BaseResult {
         BaseResult result = new BaseResult();
         result.setCode(CodeEnums.FAILED.code);
         result.setMessage("系统异常");
-        logger.info(JSON.toJSONString(result));
         return result;
     }
 
@@ -77,7 +73,6 @@ public class BaseResult {
         result.setCode(CodeEnums.FAILED.code);
         result.setMessage("系统异常");
         result.setData(data);
-        logger.info(JSON.toJSONString(result));
         return result;
     }
 
@@ -90,7 +85,6 @@ public class BaseResult {
         BaseResult result = new BaseResult();
         result.setCode(CodeEnums.FAILED.code);
         result.setMessage(msg);
-        logger.info(JSON.toJSONString(result));
         return result;
     }
 
@@ -103,7 +97,6 @@ public class BaseResult {
         BaseResult result = new BaseResult();
         result.setCode(code);
         result.setMessage(msg);
-        logger.info(JSON.toJSONString(result));
         return result;
     }
 
@@ -119,7 +112,6 @@ public class BaseResult {
         result.setCode(code);
         result.setMessage(msg);
         result.setData(data);
-        logger.info(JSON.toJSONString(result));
         return result;
     }
 

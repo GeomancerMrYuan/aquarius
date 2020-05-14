@@ -24,9 +24,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
 //        registry.addResourceHandler("/").addResourceLocations("/doc.html");
 //    }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        // 添加一个拦截器，连接以/admin为前缀的 url路径
-        registry.addInterceptor(new LoggerIntercptor()).addPathPatterns("/**");
-    }
+    /**
+     * @Description 配置拦截器
+     * @Date 2020-05-14 15:16
+     * @Created by yuanpeng
+     */
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        // 添加一个拦截器，连接以/admin为前缀的 url路径
+//        registry.addInterceptor(new LoggerIntercptor()).addPathPatterns("/**");
+//    }
 }
