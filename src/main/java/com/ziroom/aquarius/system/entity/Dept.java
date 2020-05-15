@@ -41,14 +41,12 @@ public class Dept extends Model<Dept> {
      * 上级部门ID
      */
     @NotNull(message = "上级部门Id不能为空")
-    @ApiModelProperty(name = "上级部门ID",required = true)
     private Long parentId;
 
     /**
      * 部门名称
      */
     @NotNull(message = "部门名称不能为空")
-    @ApiModelProperty(name = "部门名称",required = true)
     private String deptName;
 
     /**

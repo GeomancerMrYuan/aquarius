@@ -8,7 +8,6 @@ import lombok.Data;
  * @Created by yuanpeng
  */
 @Data
-@Deprecated
 public class WebLog {
     /**
      * 操作描述
@@ -65,5 +64,4 @@ public class WebLog {
      */
     private Object result;
 
-    //省略了getter,setter方法
 }

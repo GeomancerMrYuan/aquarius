@@ -61,7 +61,7 @@ public class DeptController {
     }
 
     @PostMapping("/getPage")
-    public BaseResult getDeptPage(@NotNull Long current, @NotNull Long size, Dept dept){
+    public BaseResult getDeptPage(Long current, Long size, Dept dept){
         Page<Dept> page = new Page<>(current,size);
         QueryWrapper<Dept> wrapper = new QueryWrapper<>(dept);
         Page<Dept> result = deptService.page(page, wrapper);
