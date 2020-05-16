@@ -47,7 +47,7 @@ public class CodeGenerator {
         gc.setEnableCache(false);
         gc.setBaseResultMap(true);
         gc.setBaseColumnList(true);
-        gc.setDateType(DateType.ONLY_DATE);
+        gc.setDateType(DateType.TIME_PACK);
         gc.setAuthor("yuanpeng");
         gc.setMapperName("%sMapper");
         gc.setXmlName("%sMapper");

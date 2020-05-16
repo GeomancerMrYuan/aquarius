@@ -5,6 +5,7 @@ import com.ziroom.aquarius.common.annotation.LogAnnotation;
 import com.ziroom.aquarius.common.util.IpUtil;
 import com.ziroom.aquarius.common.util.UUIDUtil;
 import com.ziroom.aquarius.system.entity.WebLog;
+import com.ziroom.aquarius.system.service.IWebLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -42,6 +43,8 @@ public class WebLogAspect {
 
     @Autowired
     private HttpServletRequest request;
+    @Autowired
+    private IWebLogService webLogService;
 
 
     @Pointcut("execution(public * com.ziroom.aquarius.system.controller.*.*(..))")
@@ -100,11 +103,12 @@ public class WebLogAspect {
             WebLog webLog = new WebLog();
             webLog.setBasePath(request.getRequestURI());
             webLog.setIp(request.getRemoteUser());
-            webLog.setParameter(getParameter(method, joinPoint.getArgs()));
-            webLog.setResult(result);
+            webLog.setParameter(JSON.toJSONString(getParameter(method, joinPoint.getArgs())));
+            webLog.setResult(JSON.toJSONString(result));
             webLog.setMethod(logAnnotation.methodType().getName());
             webLog.setDescription(logAnnotation.description());
             webLog.setUsername("可动态指定");
+            webLogService.asynSave(webLog);
         }
         return result;
     }

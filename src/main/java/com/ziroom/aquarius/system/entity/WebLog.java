@@ -1,33 +1,41 @@
 package com.ziroom.aquarius.system.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.baomidou.mybatisplus.annotation.TableId;
+import java.time.LocalDateTime;
+import java.io.Serializable;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
- * @Description 日志记录类,暂不使用
- * @Date 2020-05-14 18:53
- * @Created by yuanpeng
+ * <p>
+ * 
+ * </p>
+ *
+ * @author yuanpeng
+ * @since 2020-05-16
  */
 @Data
-public class WebLog {
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+@TableName("t_web_log")
+public class WebLog extends Model<WebLog> {
+
+    private static final long serialVersionUID=1L;
+
+    /**
+     * 主键id
+     */
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
+
     /**
      * 操作描述
      */
     private String description;
-
-    /**
-     * 操作用户
-     */
-    private String username;
-
-    /**
-     * 操作时间
-     */
-    private Long startTime;
-
-    /**
-     * 消耗时间
-     */
-    private Integer spendTime;
 
     /**
      * 根路径
@@ -35,33 +43,39 @@ public class WebLog {
     private String basePath;
 
     /**
-     * URI
-     */
-    private String uri;
-
-    /**
-     * URL
-     */
-    private String url;
-
-    /**
-     * 请求类型
+     * 请求方法
      */
     private String method;
 
     /**
-     * IP地址
+     * 请求ip
      */
     private String ip;
 
     /**
      * 请求参数
      */
-    private Object parameter;
+    private String parameter;
 
     /**
-     * 请求返回的结果
+     * 请求返回结果
      */
-    private Object result;
+    private String result;
+
+    /**
+     * 请求用户
+     */
+    private String username;
+
+    /**
+     * 操作时间
+     */
+    private LocalDateTime creatTime;
+
+
+    @Override
+    protected Serializable pkVal() {
+        return this.id;
+    }
 
 }

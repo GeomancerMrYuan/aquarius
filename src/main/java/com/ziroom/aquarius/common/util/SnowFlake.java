@@ -1,10 +1,9 @@
 package com.ziroom.aquarius.common.util;
 
 /**
- * twitter的snowflake算法 -- java实现
- *
- * @author rock
- * @date 2016/11/26
+ * @Description 雪花算法生成唯一ID
+ * @Date 2020-05-15 12:54
+ * @Created by yuanpeng
  */
 public class SnowFlake {
 

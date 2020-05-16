@@ -10,6 +10,11 @@ import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @Description 网络相关的工具类
+ * @Date 2020-05-15 12:54
+ * @Created by yuanpeng
+ */
 public class IpUtil {
 
     private static final String[] HEADERS = { 

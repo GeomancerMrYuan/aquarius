@@ -23,7 +23,6 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements ID
     private DeptMapper deptMapper;
 
     @Override
-    @Transactional
     public Dept getByDeptId(String deptId) {
         return deptMapper.selectById(deptId);
     }

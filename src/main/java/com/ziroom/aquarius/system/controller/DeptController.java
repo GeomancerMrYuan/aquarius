@@ -3,6 +3,7 @@ package com.ziroom.aquarius.system.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.ziroom.aquarius.common.annotation.LogAnnotation;
 import com.ziroom.aquarius.common.vo.BaseResult;
 import com.ziroom.aquarius.system.entity.Dept;
 import com.ziroom.aquarius.system.service.IDeptService;
@@ -43,6 +44,7 @@ public class DeptController {
      */
     @GetMapping("/getDeptById/{deptId}")
     @ApiOperation("根据id获取部门信息")
+    @LogAnnotation(intoDB = true,description ="根据id获取部门信息" )
     public BaseResult getDeptById(@PathVariable @ApiParam("部门id") String deptId) {
         Dept dept = deptService.getByDeptId(deptId);
         return BaseResult.success(dept);
