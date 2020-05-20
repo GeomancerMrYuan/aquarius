@@ -36,7 +36,32 @@ spring:
   resources:
     staticLocations: classpath:/resources/template
 
+  #rabbitMq
+  rabbitmq:
+    port: 5672
+    username: admin
+    password: admin
+    host: localhost
+    virtual-host: /
+
 mybatis-plus:
   configuration:
     #mybatis plus日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+exchange:
+  acquaris:
+    sms: exchange.acquaris.sms
+    mail: exchange.acquaris.mail
+
+queue:
+  acquaris:
+    sms: exchange.acquaris.sms
+    mail: exchange.acquaris.mail
+
+#rocketMq整合
+rocketmq:
+  name-server: 127.0.0.1:9876
+  producer:
+    group: finance
+

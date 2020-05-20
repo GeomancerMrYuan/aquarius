@@ -7,6 +7,8 @@ import com.ziroom.aquarius.common.annotation.LogAnnotation;
 import com.ziroom.aquarius.common.vo.BaseResult;
 import com.ziroom.aquarius.system.entity.Dept;
 import com.ziroom.aquarius.system.service.IDeptService;
+import com.ziroom.aquarius.system.service.ProducerService;
+import com.ziroom.aquarius.system.service.impl.ProduceFactory;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
@@ -37,6 +39,9 @@ public class DeptController {
     @Autowired
     private IDeptService deptService;
 
+    @Autowired
+    private ProduceFactory factory;
+
     /**
      * 根据id获取部门信息
      * @param deptId
@@ -47,6 +52,7 @@ public class DeptController {
     @LogAnnotation(intoDB = true,description ="根据id获取部门信息" )
     public BaseResult getDeptById(@PathVariable @ApiParam("部门id") String deptId) {
         Dept dept = deptService.getByDeptId(deptId);
+        factory.select("rocket").sendMsg("根据id获取部门信息");
         return BaseResult.success(dept);
     }
 
