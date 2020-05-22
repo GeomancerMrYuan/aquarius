@@ -49,10 +49,10 @@ public class DeptController {
      */
     @GetMapping("/getDeptById/{deptId}")
     @ApiOperation("根据id获取部门信息")
-    @LogAnnotation(intoDB = true,description ="根据id获取部门信息" )
-    public BaseResult getDeptById(@PathVariable @ApiParam("部门id") String deptId) {
+//    @LogAnnotation(intoDB = true,description ="根据id获取部门信息" )
+    public BaseResult getDeptById(@PathVariable @ApiParam("部门id") Long deptId) {
         Dept dept = deptService.getByDeptId(deptId);
-        factory.select("rocket").sendMsg("根据id获取部门信息");
+//        factory.select("rocket").sendMsg("根据id获取部门信息");
         return BaseResult.success(dept);
     }
 
@@ -67,6 +67,32 @@ public class DeptController {
         deptService.save(dept);
         return BaseResult.success();
     }
+
+    /**
+     * 修改部门信息
+     * @param dept
+     * @return
+     */
+    @PostMapping("/update")
+    @ApiOperation("修改部门信息")
+    public BaseResult updateDept(@RequestBody Dept dept) {
+        deptService.updateByDeptId(dept);
+        return BaseResult.success();
+    }
+
+    /**
+     * @Description 删除部门信息
+     * @Date 2020-05-21 09:37
+     * @Created by yuanpeng
+     */
+    @GetMapping("/delete/{deptId}")
+    @ApiOperation("删除部门信息")
+    public BaseResult deleteDept(@PathVariable @ApiParam("部门id") Long deptId) {
+        deptService.deleteByDeptId(deptId);
+        return BaseResult.success();
+    }
+
+
 
     @PostMapping("/getPage")
     public BaseResult getDeptPage(Long current, Long size, Dept dept){

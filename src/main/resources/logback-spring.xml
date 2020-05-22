@@ -49,7 +49,7 @@
                 <maxFileSize>100MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
             <!--日志文档保留天数-->
-            <maxHistory>7</maxHistory>
+            <maxHistory>1</maxHistory>
         </rollingPolicy>
     </appender>
 

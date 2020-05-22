@@ -13,5 +13,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IDeptService extends IService<Dept> {
 
-    Dept getByDeptId(String deptId);
+    Dept getByDeptId(Long deptId);
+
+    Dept updateByDeptId(Dept dept);
+
+    void deleteByDeptId(Long deptId);
 }
