@@ -14,7 +14,7 @@ import io.micrometer.core.instrument.util.StringUtils;
 import java.util.Scanner;
 
 // 演示例子，执行 main 方法控制台输入模块表名回车自动生成对应项目目录中
-public class CodeGenerator {
+public class  CodeGenerator {
 
     /**
      * <p>
@@ -47,7 +47,7 @@ public class CodeGenerator {
         gc.setEnableCache(false);
         gc.setBaseResultMap(true);
         gc.setBaseColumnList(true);
-        gc.setDateType(DateType.TIME_PACK);
+        gc.setDateType(DateType.ONLY_DATE);
         gc.setAuthor("yuanpeng");
         gc.setMapperName("%sMapper");
         gc.setXmlName("%sMapper");

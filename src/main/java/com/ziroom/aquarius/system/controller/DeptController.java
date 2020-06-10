@@ -9,10 +9,8 @@ import com.ziroom.aquarius.common.util.RedissonUtil;
 import com.ziroom.aquarius.common.vo.BaseResult;
 import com.ziroom.aquarius.system.entity.Dept;
 import com.ziroom.aquarius.system.service.IDeptService;
-import com.ziroom.aquarius.system.service.ProducerService;
 import com.ziroom.aquarius.system.service.impl.ProduceFactory;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
@@ -21,9 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -84,7 +79,7 @@ public class DeptController {
     @LogAnnotation(intoDB = true, description = "新增部门信息")
     public BaseResult addDept(@RequestBody @Valid Dept dept) {
         deptService.save(dept);
-        factory.select("rocket").sendMsg("新增部门信息");
+        factory.select("rabbit").sendMsg("新增部门信息");
         return BaseResult.success();
     }
 

@@ -35,9 +35,9 @@ import java.util.Map;
  * @Date Created in 2020年04月21日 18:54
  * @since 1.0
  */
-@Aspect
-@Component
-@Order(1)
+//@Aspect
+//@Component
+//@Order(1)
 @Slf4j
 public class WebLogAspect {
 

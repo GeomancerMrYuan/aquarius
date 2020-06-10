@@ -1,10 +1,10 @@
 package com.ziroom.aquarius.jvmdemo;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
 
 /**
  * @Classname Demo2
@@ -23,6 +23,16 @@ public class Demo {
          */
         int[] arr={1,2,3,4,5,6,0,9,3,4};
         Arrays.sort(arr);
+
+        JSONObject object = new JSONObject();
+        ArrayList<Object> list1 = new ArrayList<>();
+        object.put("list", list1);
+        JSON.toJSONString(object);
+
+       Map<String, Object> map = new HashMap<>();
+        map.put("list", list1);
+        JSON.toJSONString(map);
+
 
     }
 }

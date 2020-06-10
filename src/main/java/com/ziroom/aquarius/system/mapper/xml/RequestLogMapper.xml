@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ziroom.aquarius.system.mapper.RequestLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ziroom.aquarius.system.entity.RequestLog">
+        <id column="id" property="id" />
+        <result column="request_url" property="requestUrl" />
+        <result column="request_params" property="requestParams" />
+        <result column="result" property="result" />
+        <result column="request_sys_name" property="requestSysName" />
+        <result column="operation_name" property="operationName" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, request_url, request_params, result, request_sys_name, operation_name, create_time, update_time
+    </sql>
+
+</mapper>

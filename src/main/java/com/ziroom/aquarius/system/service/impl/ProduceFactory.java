@@ -22,8 +22,8 @@ public class ProduceFactory {
     @Resource(name="rabbitMqProducer")
     private ProducerService rabbitMqProducer;
 
-    @Resource(name="rocketMqProducer")
-    private ProducerService rocketMqProducer;
+//    @Resource(name="rocketMqProducer")
+//    private ProducerService rocketMqProducer;
 
     /**
      * @Description PostConstruct--依赖注入完毕后执行此方法
@@ -34,7 +34,7 @@ public class ProduceFactory {
     private void init(){
         this.loanMap.clear();
         loanMap.put("rabbit",rabbitMqProducer);
-        loanMap.put("rocket",rocketMqProducer);
+//        loanMap.put("rocket",rocketMqProducer);
     }
 
     public ProducerService select(String type) {

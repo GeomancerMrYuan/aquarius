@@ -4,31 +4,60 @@ spring:
     active: dev
 
   #数据源基本配置
-  datasource:
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    druid:
-      filters: stat
-      initialSize: 10
-      maxActive: 20
-      maxOpenPreparedStatements: 20
-      maxWait: 60000
-      minEvictableIdleTimeMillis: 300000
-      minIdle: 1
-      poolPreparedStatements: true
-      stat-view-servlet:
-        enabled: true
-        login-password: admin
-        login-username: admin
-        reset-enable: true
-        url-pattern: /druid/*
-      testOnBorrow: true
-      testOnReturn: false
-      testWhileIdle: true
-      timeBetweenEvictionRunsMillis: 60000
-      validation-query-timeout: 500
-      validationQuery: SELECT 1
+  #  datasource:
+  #    username: root
+  #    password: 123456
+  #    driver-class-name: com.mysql.cj.jdbc.Driver
+  #    druid:
+  #      filters: stat
+  #      initialSize: 10
+  #      maxActive: 20
+  #      maxOpenPreparedStatements: 20
+  #      maxWait: 60000
+  #      minEvictableIdleTimeMillis: 300000
+  #      minIdle: 1
+  #      poolPreparedStatements: true
+  #      stat-view-servlet:
+  #        enabled: true
+  #        login-password: admin
+  #        login-username: admin
+  #        reset-enable: true
+  #        url-pattern: /druid/*
+  #      testOnBorrow: true
+  #      testOnReturn: false
+  #      testWhileIdle: true
+  #      timeBetweenEvictionRunsMillis: 60000
+  #      validation-query-timeout: 500
+  #      validationQuery: SELECT 1
+  #
+  #    #sharding-jdbc配置
+  #shardingSphere 配置
+  shardingsphere:
+    datasource:
+      names: ds0
+      ds0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/aquarius?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+        username: root
+        password: 123456
+
+    sharding:
+      default-data-source-name: ds0
+      tables:
+        t_request_log:
+          actual-data-nodes: ds0.t_request_log_20200$->{6..7}
+          logic-table: t_request_log
+          table-strategy:
+            standard:
+              sharding-column: create_time
+              precise-algorithm-class-name: com.ziroom.aquarius.common.vo.ShardingAlgorithm
+    props:
+      sql:
+        show: true
+
+
+
 
   #国际化配置
   messages:
@@ -40,8 +69,8 @@ spring:
     cache: false
 
   #静态资源配置
-#  resources:
-#    staticLocations: classpath:/resources/template
+  #  resources:
+  #    staticLocations: classpath:/resources/template
 
   #rabbitMq
   rabbitmq:
@@ -53,23 +82,22 @@ spring:
 
   #redis配置
   redis:
-#    database: 0
+    #    database: 0
     host: localhost
     port: 6379
-#    password:
-#    ssl:
+    #    password:
+    #    ssl:
     timeout: 5000
     #cluster集群配置
-#    cluster:
-#      nodes:
+    #    cluster:
+    #      nodes:
     #哨兵配置
-#    sentinel:
-#      master:
-#      nodes:
+    #    sentinel:
+    #      master:
+    #      nodes:
 
     redisson:
       config: classpath:redisson.yaml
-
 
 #mybatis-plus 配置
 mybatis-plus:
