@@ -1,31 +1,22 @@
 package com.ziroom.aquarius.common.aspect;
 
-import com.alibaba.fastjson.JSON;
+import cn.hutool.core.util.IdUtil;
+import com.google.gson.Gson;
 import com.ziroom.aquarius.common.annotation.LogAnnotation;
-import com.ziroom.aquarius.common.util.IpUtil;
-import com.ziroom.aquarius.common.util.UUIDUtil;
-import com.ziroom.aquarius.system.entity.WebLog;
 import com.ziroom.aquarius.system.service.IWebLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.*;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 配置日志切面--适用于自定义的日志:如日志模块往数据库中新增用户操作记录
@@ -35,17 +26,20 @@ import java.util.Map;
  * @Date Created in 2020年04月21日 18:54
  * @since 1.0
  */
-//@Aspect
-//@Component
-//@Order(1)
+@Aspect
+@Component
+@Order(1)
+@Profile({"dev", "test"})
 @Slf4j
 public class WebLogAspect {
-
+    /**
+     * 换行符
+     */
+    private static final String LINE_SEPARATOR = System.lineSeparator();
     @Autowired
     private HttpServletRequest request;
     @Autowired
     private IWebLogService webLogService;
-
 
     @Pointcut("execution(public * com.ziroom.aquarius.system.controller.*.*(..))")
     public void webLog() {
@@ -58,91 +52,86 @@ public class WebLogAspect {
      */
     @Before("webLog()")
     public void doBefore(JoinPoint joinPoint) throws Throwable {
-        request.setAttribute("startTime", System.currentTimeMillis());
         //设置线程uid
-        Thread.currentThread().setName("request_uuid:" + UUIDUtil.UUID32() + "_" + Thread.currentThread().getId());
+        Thread.currentThread().setName("request_uuid:" + IdUtil.randomUUID() + "_" + Thread.currentThread().getId());
         //打印请求日志,IP/URL/Method和参数
-        log.info("请求地址:{},IP:{},method:{}", request.getRequestURL().toString(), IpUtil.getIpAddress(request), request.getMethod());
-        Signature signature = joinPoint.getSignature();
-        MethodSignature methodSignature = (MethodSignature) signature;
-        Method method = methodSignature.getMethod();
-        log.info("请求入参:{}", JSON.toJSONString(getParameter(method, joinPoint.getArgs())));
+        // 开始打印请求日志
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+        // 获取 @WebLog 注解的描述信息
+        String methodDescription = getAspectLogDescription(joinPoint);
+        // 打印请求相关参数
+        log.info("========================================== Start ==========================================");
+        // 打印请求 url
+        log.info("URL            : {}", request.getRequestURL().toString());
+        // 打印描述信息
+        log.info("Description    : {}", methodDescription);
+        // 打印 Http method
+        log.info("HTTP Method    : {}", request.getMethod());
+        // 打印调用 controller 的全路径以及执行方法
+        log.info("Class Method   : {}.{}", joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName());
+        // 打印请求的 IP
+        log.info("IP             : {}", request.getRemoteAddr());
+        // 打印请求入参
+        log.info("Request Args   : {}", new Gson().toJson(joinPoint.getArgs()));
     }
+
+
+    /**
+     * @Description 环绕，可以在切入点前后织入代码，并且可以自由的控制何时执行切点；
+     * @Date 2020-05-15 12:29
+     * @Created by yuanpeng
+     */
+    @Around("webLog()")
+    public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
+        long startTime = System.currentTimeMillis();
+        Object result = joinPoint.proceed();
+        // 打印出参
+        log.info("Response Args  : {}", new Gson().toJson(result));
+        // 执行耗时
+        log.info("Time-Consuming : {} ms", System.currentTimeMillis() - startTime);
+        return result;
+    }
+
 
     /**
      * @Description 打印返回结果
      * @Date 2020-05-15 12:29
      * @Created by yuanpeng
      */
-    @AfterReturning(value = "webLog()", returning = "ret")
-    public void doAfterReturning(Object ret) throws Throwable {
-        long startTime = (long) request.getAttribute("startTime");
-        long endTime = System.currentTimeMillis();
-        log.info("返回结果:{}", JSON.toJSONString(ret));
-        log.info("接口耗时:{}ms", endTime - startTime);
+    @AfterReturning("webLog()")
+    public void doAfterReturning() throws Throwable {
+        // 接口结束后换行，方便分割查看
+        log.info("=========================================== End ===========================================" + LINE_SEPARATOR);
 
     }
 
     /**
-     * @Description 含有LogAnnotation注解的请求, 添加请求日志到数据库
-     * @Date 2020-05-15 12:29
-     * @Created by yuanpeng
+     * 获取切面注解的描述
+     *
+     * @param joinPoint 切点
+     * @return 描述信息
+     * @throws Exception
      */
-    @Around("webLog() && @annotation(logAnnotation)")
-    public Object doAround(ProceedingJoinPoint joinPoint, LogAnnotation logAnnotation) throws Throwable {
-        //获取请求参数
-        Signature signature = joinPoint.getSignature();
-        MethodSignature methodSignature = (MethodSignature) signature;
-        Method method = methodSignature.getMethod();
-
-        //打印controller耗时,及返回结果
-        Object result = joinPoint.proceed();
-
-        //记录请求信息存储的数据库
-        if (logAnnotation.intoDB()) {
-            WebLog webLog = new WebLog();
-            webLog.setBasePath(request.getRequestURI());
-            webLog.setIp(request.getRemoteUser());
-            webLog.setParameter(JSON.toJSONString(getParameter(method, joinPoint.getArgs())));
-            webLog.setResult(JSON.toJSONString(result));
-            webLog.setMethod(logAnnotation.methodType().getName());
-            webLog.setDescription(logAnnotation.description());
-            webLog.setUsername("可动态指定");
-            webLogService.asynSave(webLog);
-        }
-        return result;
-    }
-
-    /**
-     * 根据方法和传入的参数获取请求参数
-     */
-    private Object getParameter(Method method, Object[] args) {
-        List<Object> argList = new ArrayList<>();
-        Parameter[] parameters = method.getParameters();
-        for (int i = 0; i < parameters.length; i++) {
-            //将RequestBody注解修饰的参数作为请求参数
-            RequestBody requestBody = parameters[i].getAnnotation(RequestBody.class);
-            if (requestBody != null) {
-                argList.add(args[i]);
-            }
-            //将RequestParam注解修饰的参数作为请求参数
-            RequestParam requestParam = parameters[i].getAnnotation(RequestParam.class);
-            if (requestParam != null) {
-                Map<String, Object> map = new HashMap<>();
-                String key = parameters[i].getName();
-                if (!StringUtils.isEmpty(requestParam.value())) {
-                    key = requestParam.value();
+    public String getAspectLogDescription(JoinPoint joinPoint)
+            throws Exception {
+        String targetName = joinPoint.getTarget().getClass().getName();
+        String methodName = joinPoint.getSignature().getName();
+        Object[] arguments = joinPoint.getArgs();
+        Class targetClass = Class.forName(targetName);
+        Method[] methods = targetClass.getMethods();
+        StringBuilder description = new StringBuilder("");
+        for (Method method : methods) {
+            if (method.getName().equals(methodName)) {
+                Class[] clazzs = method.getParameterTypes();
+                if (clazzs.length == arguments.length) {
+                    if(method.getAnnotation(LogAnnotation.class)!=null){
+                        description.append(method.getAnnotation(LogAnnotation.class).description());
+                    }
+                    break;
                 }
-                map.put(key, args[i]);
-                argList.add(map);
             }
         }
-        if (argList.size() == 0) {
-            return null;
-        } else if (argList.size() == 1) {
-            return argList.get(0);
-        } else {
-            return argList;
-        }
+        return description.toString();
     }
 }

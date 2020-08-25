@@ -1,0 +1,15 @@
+elasticjob:
+  tracing:
+    type: RDB
+  regCenter:
+    serverLists: localhost:2181
+    namespace: aquarius
+  jobs:
+    myjob:
+      elasticJobClass: com.ziroom.aquarius.elasticjob.MyJob
+      cron: 0/5 * * * * ?
+      shardingTotalCount: 3
+    scheduleJob:
+      elasticJobClass: com.ziroom.aquarius.elasticjob.ScheduleJob
+      cron: 0/5 * * * * ?
+      shardingTotalCount: 3

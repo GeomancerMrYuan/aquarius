@@ -27,3 +27,5 @@ HELP.md
 
 ### VS Code ###
 .vscode/
+/logs/aquarius-2020-06-09.0.log
+/logs/

@@ -1,9 +1,36 @@
 spring:
-  datasource:
-    url: jdbc:mysql:///aquarius?characterEncoding=utf8&useSSL=false
+  shardingsphere:
+    datasource:
+      ds0:
+        url: jdbc:mysql://localhost:3306/aquarius?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+        username: root
+        password: 123456
+  #mybatis-plus 配置打印SQL日志
+  mybatis-plus:
+    configuration:
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  #rabbitMq
+  rabbitmq:
+    port: 5672
+    username: admin
+    password: admin
+    host: localhost
+    virtual-host: /
+  #redis配置
+  redis:
+    host: localhost
 swagger:
   enable: true
 
-debug: false
+rocketmq:
+  name-server: 127.0.0.1:9876
+
+
+
+
+
+server:
+  port: 8081
+
 
 

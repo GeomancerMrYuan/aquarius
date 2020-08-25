@@ -57,7 +57,7 @@ public class SwaggerConfig{
                 //API分组
                 .groupName("业主分期")
                 //配置request_header
-                .globalOperationParameters(pars)
+//                .globalOperationParameters(pars)
                 //Swagger开关
                 .enable(flag)
                 /**

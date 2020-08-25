@@ -128,7 +128,7 @@
         <logger name="com.ziroom.aquarius" level="info"/>
         <root level="info">
             <appender-ref ref="CONSOLE" />
-            <appender-ref ref="ASYNC-FILE" />
+<!--            <appender-ref ref="ASYNC-FILE" />-->
         </root>
     </springProfile>
 
@@ -136,7 +136,7 @@
     <!-- 4.2 生产环境:输出到文档-->
     <springProfile name="pro">
         <logger name="com.ziroom.aquarius" level="info"/>
-        <root level="debug">
+        <root level="info">
             <appender-ref ref="FILE" />
         </root>
     </springProfile>

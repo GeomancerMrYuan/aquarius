@@ -52,6 +52,7 @@ public class DeptController {
      */
     @GetMapping("/getDeptById/{deptId}")
     @ApiOperation("根据id获取部门信息")
+    @LogAnnotation(intoDB = false, description = "查询部门信息")
     public BaseResult getDeptById(@PathVariable @ApiParam("部门id") Long deptId) throws InterruptedException {
         //增加分布式锁
         RLock lock = redissonUtil.getReentLock(deptId.toString());
@@ -111,6 +112,7 @@ public class DeptController {
 
     @PostMapping("/getPage")
     public BaseResult getDeptPage(Long current, Long size, Dept dept) {
+        log.info("入参current={},size={}", current,size);
         Page<Dept> page = new Page<>(current, size);
         QueryWrapper<Dept> wrapper = new QueryWrapper<>(dept);
         Page<Dept> result = deptService.page(page, wrapper);
