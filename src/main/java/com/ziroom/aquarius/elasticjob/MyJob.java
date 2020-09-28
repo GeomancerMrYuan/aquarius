@@ -4,7 +4,7 @@ import org.apache.shardingsphere.elasticjob.api.ShardingContext;
 import org.apache.shardingsphere.elasticjob.simple.job.SimpleJob;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class MyJob implements SimpleJob {
     static int i=0;
 

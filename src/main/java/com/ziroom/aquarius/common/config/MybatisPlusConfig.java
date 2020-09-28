@@ -18,7 +18,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 @EnableTransactionManagement
-@MapperScan("com.ziroom.aquarius.system.mapper")
+@MapperScan("com.ziroom.aquarius.*.mapper")
 public class MybatisPlusConfig {
 
     @Bean

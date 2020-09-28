@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ziroom.aquarius.recoupjob.mapper.RecoupJobMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ziroom.aquarius.recoupjob.entity.RecoupJob">
+        <id column="id" property="id" />
+        <result column="job_class" property="jobClass" />
+        <result column="job_name" property="jobName" />
+        <result column="job_desc" property="jobDesc" />
+        <result column="job_json_param" property="jobJsonParam" />
+        <result column="job_status" property="jobStatus" />
+        <result column="start_time" property="startTime" />
+        <result column="complete_time" property="completeTime" />
+        <result column="create_time" property="createTime" />
+        <result column="effect_time" property="effectTime" />
+        <result column="retry_cur_times" property="retryCurTimes" />
+        <result column="retry_total_times" property="retryTotalTimes" />
+        <result column="fail_reason" property="failReason" />
+        <result column="async" property="async" />
+        <result column="bus_code" property="busCode" />
+        <result column="fail_alarm_flag" property="failAlarmFlag" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, job_class, job_name, job_desc, job_json_param, job_status, start_time, complete_time, create_time, effect_time, retry_cur_times, retry_total_times, fail_reason, async, bus_code, fail_alarm_flag
+    </sql>
+
+</mapper>
